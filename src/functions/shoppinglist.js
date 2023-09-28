@@ -70,6 +70,23 @@ app.http('shoppinglist', {
             let result;
 
             context.log('Received POST request');
+
+            // See https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/getReader
+            const reader = request.body.getReader();
+
+
+
+            /* let body = [];
+            request
+                .on('data', chunk => {
+                    body.push(chunk);
+                })
+                .on('end', () => {
+                    body = Buffer.concat(body).toString();
+                });
+
+            context.log(Array.toString(body)); */
+            
             result = 'Thanks for the POST request!'
 
             return { body: result };
