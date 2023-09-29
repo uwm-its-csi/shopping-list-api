@@ -7,7 +7,7 @@ const { MongoClient } = require('mongodb');
 const uri = process.env.COSMOS_CONNECTION_STRING;
 const client = new MongoClient(uri);
 
-app.http('shoppinglist', {
+app.http('shoppinglists', {
     methods: ['GET', 'POST'],
     authLevel: 'anonymous',
     handler: async (request, context) => {
@@ -19,17 +19,12 @@ app.http('shoppinglist', {
                 projection: { _id: 0, id: 1, userID: 1, list: 1 },
             };
 
-            const oneListOptions = {
-                projection: {}
-            }
-            
-            let db;
             let collection;
             let result;
 
             try {
                 await client.connect();
-                db = client.db('shoppinglist');
+                const db = client.db('shoppinglist');
                 collection = db.collection('shoppingLists');
             } catch (err) {
                 context.log(err.message);
@@ -69,29 +64,24 @@ app.http('shoppinglist', {
         } else if (request.method === 'POST') {
             let result;
 
-            context.log('Received POST request');
+            const body = await request.json();
+            const query = { userID: body.userID };
+            const update = { $set: body };
+            const options = {upsert: true, new: true};
 
-            // See https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/getReader
-            const reader = request.body.getReader();
+            try {
+                await client.connect();
+                const upsertResult = await client.db('shoppinglist').collection('shoppingLists').updateOne(query, update, options);
+                result = JSON.stringify(upsertResult);
 
-
-
-            /* let body = [];
-            request
-                .on('data', chunk => {
-                    body.push(chunk);
-                })
-                .on('end', () => {
-                    body = Buffer.concat(body).toString();
-                });
-
-            context.log(Array.toString(body)); */
-            
-            result = 'Thanks for the POST request!'
+                context.log(result);
+            } catch (err) {
+                context.log(err.message);
+            } finally {
+                await client.close();
+            }
 
             return { body: result };
         }
-
-        
     }
 });
