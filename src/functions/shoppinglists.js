@@ -21,7 +21,6 @@ app.http('shoppinglists', {
 
             let collection;
             let result;
-            let status;
 
             try {
                 await client.connect();
@@ -44,10 +43,8 @@ app.http('shoppinglists', {
                         const list = listDoc.list;
                         console.dir(`Found list: ${JSON.stringify(list)}`);
                         result = JSON.stringify(list);
-                        status = 200;
                     } else {
                         result = '[]';
-                        status = 204;
                     }
                     
                 } catch (err) {
@@ -70,8 +67,7 @@ app.http('shoppinglists', {
             }
             
             return {
-                body: result,
-                status: status
+                body: result
             };
         } else if (request.method === 'POST') {
             let result;
