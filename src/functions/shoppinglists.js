@@ -47,7 +47,7 @@ app.http('shoppinglists', {
                         status = 200;
                     } else {
                         result = '[]';
-                        status = 240;
+                        status = 204;
                     }
                     
                 } catch (err) {
