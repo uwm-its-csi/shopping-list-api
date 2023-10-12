@@ -1,5 +1,7 @@
 # shopping-list-api
 
+Base URL: https://rbeerma-shoppinglist.azurewebsites.net
+
 #### Getting all shopping lists
 
 <details>
