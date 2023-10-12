@@ -137,6 +137,7 @@ userID
 None
 
 ##### Request Body
+```
 userID: string
 list: array of type 'item'
 item:
@@ -144,6 +145,7 @@ item:
   name: string
   quantity: int
   checked: boolean
+```
 
 ##### Example Request Body
 ```json
