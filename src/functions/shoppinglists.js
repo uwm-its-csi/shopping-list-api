@@ -38,9 +38,15 @@ app.http('shoppinglists', {
                         userID: userid,
                     });
 
-                    const list = listDoc.list;
-                    console.dir(`Found list: ${JSON.stringify(list)}`);
-                    result = JSON.stringify(list);
+                    context.log(listDoc);
+                    if (listDoc) {
+                        const list = listDoc.list;
+                        console.dir(`Found list: ${JSON.stringify(list)}`);
+                        result = JSON.stringify(list);
+                    } else {
+                        result = '[]';
+                    }
+                    
                 } catch (err) {
                     context.log(err.message);
                 } finally {
@@ -60,7 +66,9 @@ app.http('shoppinglists', {
                 }
             }
             
-            return { body: result };
+            return {
+                body: result
+            };
         } else if (request.method === 'POST') {
             let result;
 
