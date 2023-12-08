@@ -5,7 +5,11 @@ require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
 const uri = process.env.COSMOS_CONNECTION_STRING;
-const client = new MongoClient(uri);
+const client = new MongoClient(uri,
+    {
+        tlsAllowInvalidCertificates: true
+    }
+);
 
 app.http('itemlist', {
     methods: ['GET'],
@@ -22,7 +26,7 @@ app.http('itemlist', {
         try {
             await client.connect();
             db = client.db('shoppinglist');
-            collection = db.collection('itemList');
+            collection = db.collection('itemlist');
         } catch (err) {
             context.log(err.message);
         }
