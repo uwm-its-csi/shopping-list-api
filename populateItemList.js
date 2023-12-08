@@ -2,21 +2,36 @@ require('dotenv').config();
 
 const { MongoClient } = require('mongodb');
 
-const itemList = [
-    {name: 'Milk'},
-    {name: 'Bread'},
-    {name: 'Dog Food'},
-    {name: 'Cat Food'},
-    {name: 'Coffee'},
-    {name: 'Tea'},
-    {name: 'Fish'},
-    {name: 'Broccoli'},
-    {name: 'Bananas'},
-    {name: 'Apples'},
-    {name: 'Crackers'},
-    {name: 'Cookies'},
-    {name: 'Eggs'},
-    {name: 'Cheese'},
+const itemLists = [
+    {
+        store: 'grocery',
+        items: [
+            {name: 'milk'},
+            {name: 'bread'},
+            {name: 'dog food'},
+            {name: 'cat food'},
+            {name: 'coffee'},
+            {name: 'tea'},
+            {name: 'fish'},
+            {name: 'broccoli'},
+            {name: 'bananas'},
+            {name: 'apples'},
+            {name: 'crackers'},
+            {name: 'cookies'},
+            {name: 'eggs'},
+            {name: 'cheese'},
+        ],
+    },
+    {
+        store: 'hardware',
+        items: [
+            {name: 'plunger'},
+            {name: 'light bulbs'},
+            {name: 'door hinge'},
+            {name: 'lumber (2x4)'},
+            {name: 'extension cord'},
+        ]
+    }
 ]
 
 const uri = process.env.COSMOS_CONNECTION_STRING;
@@ -33,9 +48,9 @@ async function main() {
     try {
         await client.connect();
         db = client.db('shoppinglist');
-        collection = db.collection('itemlist');
+        collection = db.collection('itemlists');
         
-        await collection.insertMany(itemList);
+        await collection.insertMany(itemLists);
     } catch (err) {
         console.error(err.message);
     } finally {

@@ -11,12 +11,12 @@ const client = new MongoClient(uri,
     }
 );
 
-app.http('itemlist', {
+app.http('itemlists', {
     methods: ['GET'],
     authLevel: 'anonymous',
     handler: async (request, context) => {
         const options = {
-            projection: { _id: 0, name: 1 },
+            projection: { _id: 0, store: 1, items: 1 },
         };
 
         let db;
@@ -26,14 +26,14 @@ app.http('itemlist', {
         try {
             await client.connect();
             db = client.db('shoppinglist');
-            collection = db.collection('itemlist');
+            collection = db.collection('itemlists');
         } catch (err) {
             context.log(err.message);
         }
 
         try {
-            const list = await collection.find({ }, options).toArray();
-            result = JSON.stringify(list);
+            const lists = await collection.find({ }, options).toArray();
+            result = JSON.stringify(lists);
         } catch (err) {
             context.log(err.message);
         } finally {

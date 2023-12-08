@@ -29,7 +29,7 @@ app.http('shoppinglists', {
             try {
                 await client.connect();
                 const db = client.db('shoppinglist');
-                collection = db.collection('shoppingLists');
+                collection = db.collection('shoppinglists');
             } catch (err) {
                 context.log(err.message);
             }
@@ -83,7 +83,7 @@ app.http('shoppinglists', {
 
             try {
                 await client.connect();
-                const upsertResult = await client.db('shoppinglist').collection('shoppingLists').updateOne(query, update, options);
+                const upsertResult = await client.db('shoppinglist').collection('shoppinglists').updateOne(query, update, options);
                 result = JSON.stringify(upsertResult);
 
                 context.log(result);
