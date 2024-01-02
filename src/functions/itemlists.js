@@ -1,10 +1,11 @@
 const { app } = require('@azure/functions');
 
-require('dotenv').config();
+//require('dotenv').config();
 
 const { MongoClient } = require('mongodb');
 
 const uri = process.env.COSMOS_CONNECTION_STRING;
+
 const client = new MongoClient(uri,
     {
         tlsAllowInvalidCertificates: true
@@ -40,6 +41,11 @@ app.http('itemlists', {
             await client.close();
         }
 
-        return { body: result };
+        return {
+            body: result,
+            headers: {
+                'content-type': 'application/json'
+            }
+        };
     }
 });

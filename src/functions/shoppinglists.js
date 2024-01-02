@@ -71,7 +71,10 @@ app.http('shoppinglists', {
             }
             
             return {
-                body: result
+                body: result,
+                headers: {
+                    'content-type': 'application/json'
+                }
             };
         } else if (request.method === 'POST') {
             let result;
@@ -93,7 +96,12 @@ app.http('shoppinglists', {
                 await client.close();
             }
 
-            return { body: result };
+            return {
+                body: result,
+                headers: {
+                    'content-type': 'application/json'
+                }
+            };
         }
     }
 });
