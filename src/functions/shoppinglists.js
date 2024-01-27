@@ -5,11 +5,7 @@ require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
 const uri = process.env.COSMOS_CONNECTION_STRING;
-const client = new MongoClient(uri,
-    {
-        tlsAllowInvalidCertificates: true
-    }
-);
+const client = new MongoClient(uri);
 
 app.http('shoppinglists', {
     methods: ['GET', 'POST'],

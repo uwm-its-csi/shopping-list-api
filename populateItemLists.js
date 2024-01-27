@@ -35,11 +35,7 @@ const itemLists = [
 ]
 
 const uri = process.env.COSMOS_CONNECTION_STRING;
-const client = new MongoClient (uri,
-    {
-        tlsAllowInvalidCertificates: true
-    }
-);
+const client = new MongoClient (uri);
 
 let db;
 let collection;
@@ -59,3 +55,4 @@ async function main() {
 }
 
 main();
+console.log('Done!');
